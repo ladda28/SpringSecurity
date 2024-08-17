@@ -8,40 +8,42 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Autowired
-    private UserDetailsService userDetailsService;
-public HttpSecurity securityFilterChain (HttpSecurity http) throws Exception {
+    UserDetailsService UserDetailsService;
+
+    @Bean
+public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
 
 return http
-.csrf(customizer -> {
+.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests (request -> request
 
-            try {
-                customizer.disable()
-                .authorizeHttpRequests (request -> request.anyRequest().authenticated())
+                        .requestMatchers("register","login").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic (Customizer.withDefaults())
                 .sessionManagement (session ->
                 session.sessionCreationPolicy (SessionCreationPolicy.STATELESS))
                 .build();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+
 
 }
 @Bean
-public AuthenticationProvider authenticationProvider(){
-DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-provider.setPasswordEncoder (NoOpPasswordEncoder.getInstance());
-provider.setUserDetailsService(userDetailsService);
-return provider;
-}
-}
+public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+    provider.setUserDetailsService(UserDetailsService);
+
+
+    return provider;
+} }

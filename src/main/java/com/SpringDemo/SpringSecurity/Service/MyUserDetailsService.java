@@ -1,5 +1,7 @@
-package com.SpringDemo.SpringSecurity.Model;
+package com.SpringDemo.SpringSecurity.Service;
 
+import com.SpringDemo.SpringSecurity.Model.User;
+import com.SpringDemo.SpringSecurity.Model.UserDetailspaste;
 import com.SpringDemo.SpringSecurity.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

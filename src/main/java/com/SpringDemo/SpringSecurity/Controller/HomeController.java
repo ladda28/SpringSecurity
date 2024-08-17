@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
 public class HomeController {
 
     @Autowired
@@ -18,16 +17,16 @@ public class HomeController {
         return "In Home page";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/page1")
-    public String  page1() {
-        return "In page1";
-    }
-
-
     @PostMapping("/register")
     public User UserRegister(@RequestBody User user) {
         return userService.UserRegister(user);
     }
-
+//    @PostMapping("/login")
+//    public User UserRegister(@RequestBody User user) {
+//        return userService.UserRegister(user);
+//    }
+@PostMapping("/login")
+public String UserRegister() {
+    return "userService.UserRegister(user)";
+}
 }
