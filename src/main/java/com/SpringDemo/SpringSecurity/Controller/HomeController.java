@@ -1,32 +1,29 @@
 package com.SpringDemo.SpringSecurity.Controller;
 
-import com.SpringDemo.SpringSecurity.Model.User;
+import com.SpringDemo.SpringSecurity.Entity.User;
 import com.SpringDemo.SpringSecurity.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-public class HomeController {
+import java.util.List;
 
+@RestController
+@RequestMapping("/api")
+public class HomeController {
     @Autowired
     UserService userService;
-
-    @GetMapping("/home")
-    public String Home() {
-        return "In Home page";
+    @GetMapping("home")
+    public String home() {
+        return "Welcome to Spring Security";
     }
 
-    @PostMapping("/register")
-    public User UserRegister(@RequestBody User user) {
-        return userService.UserRegister(user);
+    @GetMapping("users")
+    public List<User> AllUsers() {
+    return userService.getAllusers();
     }
-//    @PostMapping("/login")
-//    public User UserRegister(@RequestBody User user) {
-//        return userService.UserRegister(user);
-//    }
-@PostMapping("/login")
-public String UserRegister() {
-    return "userService.UserRegister(user)";
-}
+    @PostMapping("register")
+    public User register(@RequestBody User user) {
+
+        return userService.register(user);
+    }
 }

@@ -1,29 +1,26 @@
-package com.SpringDemo.SpringSecurity.Model;
+package com.SpringDemo.SpringSecurity.Entity;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class UserDetailspaste implements UserDetails {
+public class UserPrinciple implements UserDetails {
+    private User user;
 
-    private final User user;
-
-    public UserDetailspaste(User user) {
-        this.user=user;
+    public UserPrinciple(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return List.of();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getPassword() ;
     }
 
     @Override
@@ -43,8 +40,7 @@ public class UserDetailspaste implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
-    }
+        return true;}
 
     @Override
     public boolean isEnabled() {
