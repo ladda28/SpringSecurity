@@ -33,8 +33,10 @@ public class SecurityConfig {
                 authorizeHttpRequests(request -> request
                         .requestMatchers("api/register","api/auth/login").permitAll()
                         .anyRequest().authenticated()).httpBasic(Customizer.withDefaults()).
-               sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+               sessionManagement(session ->
+                       session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+               .addFilterBefore(jwtFilter,
+                       UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
     @Bean
